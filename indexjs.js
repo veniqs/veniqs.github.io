@@ -10,7 +10,7 @@ images.bind("click", next);
 
 function restart() {
     time = 0;
-    $("span.imput").each(function() {
+    $("span.imput").each(function () {
         $(this).text("");
     });
     $("span.time").text("");
@@ -37,6 +37,7 @@ function start(event) {
     restart();
     startTimer();
     $("img.k1img").removeClass("hidden");
+    $("div.k1img").removeClass("hodden");
     startButton.addClass("hidden");
 };
 
@@ -44,8 +45,11 @@ function next(event) {
     var currImg = getCurrentImage();
     if (getIfCanPassNext(currImg, event)) {
         currImg.correspondingOutput.text(time.toFixed(1));
+        currImg.correspondingTask.addClass("hodden");
+        currImg.correspondingTask.next().removeClass("hodden");
         currImg.image.addClass("hidden");
         currImg.image.next().removeClass("hidden");
+
         if (currImg.image.next().length == 0) {
             stopTimer();
             startButton.removeClass("hidden");
@@ -60,7 +64,7 @@ function getIfCanPassNext(image, $event) {
 
     var finalClickedX = ($event.pageX - posX);
     var finalClickedY = ($event.pageY - posY);
-    //alert("x = " + finalClickedX + " y = " + finalClickedY);
+   // alert("x = " + finalClickedX + " y = " + finalClickedY);
 
 
     if (numberBetween(image.height, finalClickedY, image.fat) && numberBetween(image.width, finalClickedX, image.fat)) {
@@ -84,8 +88,13 @@ function getCurrentImage() {
         height: $(".images img:not('.hidden')").data("hai"),
         width: $(".images img:not('.hidden')").data("wid"),
         fat: $(".images img:not('.hidden')").data("fat"),
-        correspondingOutput: getCorrespondingOutput($(".images img:not('.hidden')"))
+        correspondingOutput: getCorrespondingOutput($(".images img:not('.hidden')")),
+        correspondingTask: getCorrespondingTask($(".images img:not('.hidden')"))
     };
+};
+
+function getCorrespondingTask(img) {
+    return $("div." + img.attr('class'));
 };
 
 function getCorrespondingOutput(img) {
