@@ -18,7 +18,9 @@ function restart() {
 
 function startTimer() {
     timerIsOn = true;
-    timeout = setTimeout(addTime, 100);
+    timeout = setTimeout(function () {
+        addTime();
+    }, 100);
 };
 
 function stopTimer() {
@@ -30,7 +32,9 @@ function addTime() {
     time += 0.1;
     $(".time").text(time.toFixed(1));
     if (timerIsOn) {
-        timeout = setTimeout(addTime, 100);
+        timeout = setTimeout(function () {
+            addTime();
+        }, 100);
     }
 };
 
