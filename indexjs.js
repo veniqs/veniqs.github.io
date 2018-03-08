@@ -17,20 +17,21 @@ function restart() {
 };
 
 function startTimer() {
+    timerIsOn = true;
     timeout = setTimeout(addTime, 100);
 };
 
 function stopTimer() {
     clearTimeout(timeout);
-    timerIsOn = true;
+    timerIsOn = false;
 };
 
 function addTime() {
-
     time += 0.1;
     $(".time").text(time.toFixed(1));
-    timeout = setTimeout(addTime, 100);
-
+    if (timerIsOn) {
+        timeout = setTimeout(addTime, 100);
+    }
 };
 
 function start(event) {
@@ -64,7 +65,7 @@ function getIfCanPassNext(image, $event) {
 
     var finalClickedX = ($event.pageX - posX);
     var finalClickedY = ($event.pageY - posY);
-   // alert("x = " + finalClickedX + " y = " + finalClickedY);
+    // alert("x = " + finalClickedX + " y = " + finalClickedY);
 
 
     if (numberBetween(image.height, finalClickedY, image.fat) && numberBetween(image.width, finalClickedX, image.fat)) {
